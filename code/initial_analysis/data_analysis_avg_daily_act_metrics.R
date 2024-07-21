@@ -10,6 +10,8 @@ daily_activity %>%
   geom_bar(stat = "identity") +
   labs(title = "Average Daily Activity Metrics", x = "Metric", y = "Value")
 
+
+
 # Calculate and plot average daily activity metrics with proper handling for TotalDistance
 avg_metrics <- daily_activity %>%
   summarise(
