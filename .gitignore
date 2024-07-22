@@ -52,3 +52,12 @@ rsconnect/
 
 # Ignoring raw data files
 raw_data/
+
+
+processed_data/
+
+
+documentation/
+
+
+code/initial_analysis
