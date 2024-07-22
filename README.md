@@ -126,6 +126,7 @@ ggplot(daily_activity_combined, aes(x = ActivityDate, y = TotalSteps)) +
   geom_line(color = "blue") +
   labs(title = "Time Series of Total Steps", x = "Date", y = "Total Steps") +
   theme_minimal()
+```
 
 ## Recommendations
 1. **Targeted Marketing:**
