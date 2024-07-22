@@ -21,23 +21,31 @@ We used public data from Fitbit fitness trackers, which includes personal tracke
 
 2. **Correlation Insights:**
    - A strong positive correlation exists between total steps and calories burned.
+  
    
 ![bellabeat_correlation](images/bellabeat_correlation1.png)
 
+
 3. **Daily Patterns:**
    - Activity levels vary significantly across different days of the week, with users being more active on certain days.
+
    
 ![bellabeat_correlation](images/daily_patterns.png)
 
+
 4. **Active vs. Sedentary Days:**
    - Active days (defined as more than 10,000 steps) show significantly higher levels of total steps, distance, and calories burned compared to sedentary days.
+ 
   
 ![bellabeat_correlation](images/active_vs_sedentary_days.png)
+
 
 5. **Time Series Trends:**
    - There are noticeable trends and variations in activity levels over the analyzed time period.
 
+
 ![bellabeat_correlation](images/time_series.png)
+
 
 ## Code for Analysis
 
