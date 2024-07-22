@@ -30,6 +30,102 @@ We used public data from Fitbit fitness trackers, which includes personal tracke
 
 5. **Time Series Trends:**
    - There are noticeable trends and variations in activity levels over the analyzed time period.
+   
+## Code for Analysis
+
+### Load and Combine Data
+```r
+# Load necessary libraries
+library(tidyverse)
+library(lubridate)
+
+# Define file paths
+file_path1 <- "path_to_your_data_directory/Fitabase Data 3.12.16-4.11.16/dailyActivity_merged.csv"
+file_path2 <- "path_to_your_data_directory/Fitabase Data 4.12.16-5.12.16/dailyActivity_merged.csv"
+
+# Read the CSV files into data frames
+daily_activity1 <- read_csv(file_path1)
+daily_activity2 <- read_csv(file_path2)
+
+# Combine the datasets
+daily_activity_combined <- bind_rows(daily_activity1, daily_activity2)
+
+# Convert ActivityDate to Date type
+daily_activity_combined$ActivityDate <- mdy(daily_activity_combined$ActivityDate)
+
+# Distribution of Total Steps
+library(ggplot2)
+
+ggplot(daily_activity_combined, aes(x = TotalSteps)) +
+  geom_histogram(binwidth = 1000, fill = "blue", color = "white") +
+  labs(title = "Distribution of Total Steps", x = "Total Steps", y = "Frequency") +
+  theme_minimal()
+
+# Correlation Heatmap
+library(ggcorrplot)
+
+cor_matrix_combined <- daily_activity_combined %>%
+  select(TotalSteps, TotalDistance, Calories, SedentaryMinutes, LightlyActiveMinutes, FairlyActiveMinutes, VeryActiveMinutes) %>%
+  cor(use = "complete.obs")
+
+ggcorrplot(cor_matrix_combined, lab = TRUE) +
+  labs(title = "Correlation Matrix of Activity Metrics")
+   
+# Daily Patterns with units in the legend
+daily_activity_combined$Weekday <- weekdays(daily_activity_combined$ActivityDate)
+
+avg_by_day_combined <- daily_activity_combined %>%
+  group_by(Weekday) %>%
+  summarise(
+    AvgTotalSteps = mean(TotalSteps, na.rm = TRUE),
+    AvgTotalDistance = mean(TotalDistance, na.rm = TRUE) * 1000,  # Convert to meters
+    AvgCalories = mean(Calories, na.rm = TRUE)
+  )
+
+avg_by_day_combined %>%
+  gather(key = "Metric", value = "Value", -Weekday) %>%
+  mutate(Metric = recode(Metric, 
+                         "AvgTotalSteps" = "Average Total Steps", 
+                         "AvgTotalDistance" = "Average Total Distance (meters)",
+                         "AvgCalories" = "Average Calories")) %>%
+  ggplot(aes(x = Weekday, y = Value, fill = Metric)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Metrics by Day of the Week", x = "Day of the Week", y = "Average Value") +
+  theme_minimal()
+
+# Active vs. Sedentary Days with units in the legend
+threshold <- 10000
+
+daily_activity_combined <- daily_activity_combined %>%
+  mutate(DayType = ifelse(TotalSteps > threshold, "Active", "Sedentary"))
+
+active_vs_sedentary_combined <- daily_activity_combined %>%
+  group_by(DayType) %>%
+  summarise(
+    AvgTotalSteps = mean(TotalSteps, na.rm = TRUE),
+    AvgTotalDistance = mean(TotalDistance, na.rm = TRUE) * 1000,  # Convert to meters
+    AvgCalories = mean(Calories, na.rm = TRUE),
+    AvgSedentaryMinutes = mean(SedentaryMinutes, na.rm = TRUE)
+  )
+
+active_vs_sedentary_combined %>%
+  gather(key = "Metric", value = "Value", -DayType) %>%
+  mutate(Metric = recode(Metric, 
+                         "AvgTotalSteps" = "Average Total Steps", 
+                         "AvgTotalDistance" = "Average Total Distance (meters)",
+                         "AvgCalories" = "Average Calories",
+                         "AvgSedentaryMinutes" = "Average Sedentary Minutes")) %>%
+  ggplot(aes(x = DayType, y = Value, fill = DayType)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~ Metric, scales = "free_y") +
+  labs(title = "Comparison of Metrics on Active vs. Sedentary Days", x = "Day Type", y = "Average Value") +
+  theme_minimal()
+
+# Time Series Plot
+ggplot(daily_activity_combined, aes(x = ActivityDate, y = TotalSteps)) +
+  geom_line(color = "blue") +
+  labs(title = "Time Series of Total Steps", x = "Date", y = "Total Steps") +
+  theme_minimal()
 
 ## Recommendations
 1. **Targeted Marketing:**
