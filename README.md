@@ -21,16 +21,24 @@ We used public data from Fitbit fitness trackers, which includes personal tracke
 
 2. **Correlation Insights:**
    - A strong positive correlation exists between total steps and calories burned.
+   
+![bellabeat_correlation](images/bellabeat_correlation1.png)
 
 3. **Daily Patterns:**
    - Activity levels vary significantly across different days of the week, with users being more active on certain days.
+   
+![bellabeat_correlation](images/daily_patterns.png)
 
 4. **Active vs. Sedentary Days:**
    - Active days (defined as more than 10,000 steps) show significantly higher levels of total steps, distance, and calories burned compared to sedentary days.
+  
+![bellabeat_correlation](images/active_vs_sedentary_days.png)
 
 5. **Time Series Trends:**
    - There are noticeable trends and variations in activity levels over the analyzed time period.
-   
+
+![bellabeat_correlation](images/time_series.png)
+
 ## Code for Analysis
 
 ### Load and Combine Data
@@ -52,16 +60,20 @@ daily_activity_combined <- bind_rows(daily_activity1, daily_activity2)
 
 # Convert ActivityDate to Date type
 daily_activity_combined$ActivityDate <- mdy(daily_activity_combined$ActivityDate)
+```
 
-# Distribution of Total Steps
+### Distribution of Total Steps
+```r
 library(ggplot2)
 
 ggplot(daily_activity_combined, aes(x = TotalSteps)) +
   geom_histogram(binwidth = 1000, fill = "blue", color = "white") +
   labs(title = "Distribution of Total Steps", x = "Total Steps", y = "Frequency") +
   theme_minimal()
+```
 
-# Correlation Heatmap
+### Correlation Heatmap
+```r
 library(ggcorrplot)
 
 cor_matrix_combined <- daily_activity_combined %>%
@@ -71,10 +83,9 @@ cor_matrix_combined <- daily_activity_combined %>%
 ggcorrplot(cor_matrix_combined, lab = TRUE) +
   labs(title = "Correlation Matrix of Activity Metrics")
 ```
-![bellabeat_correlation](images/bellabeat_correlation1.png)
+
+### Daily Patterns
 ```r
-  
-# Daily Patterns with units in the legend
 daily_activity_combined$Weekday <- weekdays(daily_activity_combined$ActivityDate)
 
 avg_by_day_combined <- daily_activity_combined %>%
@@ -95,8 +106,10 @@ avg_by_day_combined %>%
   geom_bar(stat = "identity", position = "dodge") +
   labs(title = "Average Metrics by Day of the Week", x = "Day of the Week", y = "Average Value") +
   theme_minimal()
+```
 
-# Active vs. Sedentary Days with units in the legend
+### Active vs. Sedentary Days
+```r
 threshold <- 10000
 
 daily_activity_combined <- daily_activity_combined %>%
@@ -123,8 +136,10 @@ active_vs_sedentary_combined %>%
   facet_wrap(~ Metric, scales = "free_y") +
   labs(title = "Comparison of Metrics on Active vs. Sedentary Days", x = "Day Type", y = "Average Value") +
   theme_minimal()
+```
 
-# Time Series Plot
+### Time Series Plot
+```r
 ggplot(daily_activity_combined, aes(x = ActivityDate, y = TotalSteps)) +
   geom_line(color = "blue") +
   labs(title = "Time Series of Total Steps", x = "Date", y = "Total Steps") +
