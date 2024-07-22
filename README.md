@@ -70,7 +70,10 @@ cor_matrix_combined <- daily_activity_combined %>%
 
 ggcorrplot(cor_matrix_combined, lab = TRUE) +
   labs(title = "Correlation Matrix of Activity Metrics")
-   
+```
+![bellabeat_correlation](images/bellabeat_correlation1.png)
+```r
+  
 # Daily Patterns with units in the legend
 daily_activity_combined$Weekday <- weekdays(daily_activity_combined$ActivityDate)
 
