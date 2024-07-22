@@ -1,23 +1,25 @@
-# Define a threshold for active days (e.g., more than 10,000 steps)
+# Active vs. Sedentary Days with units in the legend
 threshold <- 10000
 
-# Add a column to classify days as active or sedentary
 daily_activity_combined <- daily_activity_combined %>%
   mutate(DayType = ifelse(TotalSteps > threshold, "Active", "Sedentary"))
 
-# Compare metrics on active vs. sedentary days
 active_vs_sedentary_combined <- daily_activity_combined %>%
   group_by(DayType) %>%
   summarise(
     AvgTotalSteps = mean(TotalSteps, na.rm = TRUE),
-    AvgTotalDistance = mean(TotalDistance, na.rm = TRUE),
+    AvgTotalDistance = mean(TotalDistance, na.rm = TRUE) * 1000,  # Convert to meters
     AvgCalories = mean(Calories, na.rm = TRUE),
     AvgSedentaryMinutes = mean(SedentaryMinutes, na.rm = TRUE)
   )
 
-# Plot comparison
 active_vs_sedentary_combined %>%
   gather(key = "Metric", value = "Value", -DayType) %>%
+  mutate(Metric = recode(Metric, 
+                         "AvgTotalSteps" = "Average Total Steps", 
+                         "AvgTotalDistance" = "Average Total Distance (meters)",
+                         "AvgCalories" = "Average Calories",
+                         "AvgSedentaryMinutes" = "Average Sedentary Minutes")) %>%
   ggplot(aes(x = DayType, y = Value, fill = DayType)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~ Metric, scales = "free_y") +
