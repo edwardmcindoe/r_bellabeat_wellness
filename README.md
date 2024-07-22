@@ -1,7 +1,7 @@
 # Bellabeat Smart Device Usage Analysis
 
 ## Executive Summary
-In this analysis, we examined the usage patterns of smart devices based on activity data from Fitbit users. Our key findings reveal insights into users' daily activity levels, the relationship between different activity metrics, patterns across different days of the week, and differences between active and sedentary days. Based on these insights, we propose several high-level recommendations to enhance Bellabeat's marketing strategy.
+In this analysis, I examined the usage patterns of smart devices based on activity data from Fitbit users. My key findings reveal insights into users' daily activity levels, the relationship between different activity metrics, patterns across different days of the week, and differences between active and sedentary days. Based on these insights, I propose several high-level recommendations to enhance Bellabeat's marketing strategy.
 
 ## Introduction
 Bellabeat is a high-tech company that manufactures health-focused smart products for women. This project aims to analyze smart device usage data to gain insights into how consumers use their devices. These insights will help guide Bellabeat's marketing strategy and product development.
