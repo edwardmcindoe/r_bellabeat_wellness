@@ -4,7 +4,7 @@
 In this analysis, I examined the usage patterns of smart devices based on activity data from Fitbit users. My key findings reveal insights into users' daily activity levels, the relationship between different activity metrics, patterns across different days of the week, and differences between active and sedentary days. Based on these insights, I propose several high-level recommendations to enhance Bellabeat's marketing strategy.
 
 ## Introduction
-Bellabeat is a high-tech company that manufactures health-focused smart products for women. This project aims to analyze smart device usage data to gain insights into how consumers use their devices. These insights will help guide Bellabeat's marketing strategy and product development.
+Bellabeat is a high-tech company that manufactures health-focused smart products for women. This project aims to analyse smart device usage data to gain insights into how consumers use their devices. These insights will help guide Bellabeat's marketing strategy and product development.
 
 ## Data Overview
 We used public data from Fitbit fitness trackers, which includes personal tracker data from 30 users. The data covers minute-level output for physical activity, heart rate, and sleep monitoring, and includes information about daily activity, steps, and heart rate.
@@ -41,7 +41,7 @@ We used public data from Fitbit fitness trackers, which includes personal tracke
 
 
 5. **Time Series Trends:**
-   - There are noticeable trends and variations in activity levels over the analyzed time period.
+   - There are noticeable trends and variations in activity levels over the analysed time period.
 
 
 ![bellabeat_correlation](images/time_series.png)
@@ -165,7 +165,7 @@ ggplot(daily_activity_combined, aes(x = ActivityDate, y = TotalSteps)) +
    - Create content that educates users on the benefits of regular activity, supported by data insights on daily and weekly patterns.
 
 4. **Feature Enhancements:**
-   - Consider adding personalized insights and recommendations based on users' activity data to keep them engaged and motivated.
+   - Consider adding personalised insights and recommendations based on users' activity data to keep them engaged and motivated.
 
 ## Conclusion
 This analysis provides valuable insights into how users engage with their smart devices and highlights opportunities for Bellabeat to enhance its marketing strategies and product offerings. By leveraging these insights, Bellabeat can better support its users in achieving their health and wellness goals.
